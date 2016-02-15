@@ -1,6 +1,10 @@
 var ChargeCalculator = function() {};
 
 var validateTimeParameters = function(startTime, endTime) {
+  if (endTime <= startTime) {
+    throw new Error("Start time must be before end time");
+  }
+
   if (startTime.getHours() < 17) {
     throw new Error("Start time can be no earlier than 5:00 PM");
   }
