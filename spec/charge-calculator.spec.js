@@ -57,4 +57,10 @@ describe('Charge Calculator', function() {
     expect(chargeCalculator.calculate(startTime, endTime)).toEqual(16);
   });
 
+  it('calculates one hour of babysitting between bedtime and midnight', function() {
+    var startTime = new Date(2016, 2, 13, 20, 0, 0, 0);
+    var endTime = new Date(2016, 2, 13, 21, 0, 0, 0);
+    expect(chargeCalculator.calculate(startTime, endTime)).toEqual(8);
+  });
+
 });

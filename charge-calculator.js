@@ -22,6 +22,8 @@ ChargeCalculator.prototype.calculate = function(startTime, endTime) {
   validateTimeParameters(startTime, endTime);
   if (startTime.getHours() >= 0 && startTime.getHours() < 4) {
     return (endTime.getHours() - startTime.getHours()) * 16;
+  } else if (startTime.getHours() >= 20 && startTime.getHours() <= 23) {
+    return (endTime.getHours() - startTime.getHours()) * 8;
   }
   return (endTime.getHours() - startTime.getHours()) * 12;
 };
