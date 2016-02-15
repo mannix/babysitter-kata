@@ -9,7 +9,7 @@ var validateTimeParameters = function(startTime, endTime) {
     throw new Error("Fractional hours are not permitted");
   }
 
-  if (startTime.getHours() < 17) {
+  if (startTime.getHours() < 17 && startTime.getHours() > 4) {
     throw new Error("Start time can not be earlier than 5:00 PM");
   }
 
@@ -20,6 +20,9 @@ var validateTimeParameters = function(startTime, endTime) {
 
 ChargeCalculator.prototype.calculate = function(startTime, endTime) {
   validateTimeParameters(startTime, endTime);
+  if (startTime.getHours() >= 0 && startTime.getHours() < 4) {
+    return (endTime.getHours() - startTime.getHours()) * 16;
+  }
   return (endTime.getHours() - startTime.getHours()) * 12;
 };
 
