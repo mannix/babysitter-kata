@@ -1,6 +1,6 @@
 var ChargeCalculator = function() {};
 
-ChargeCalculator.prototype.calculate = function(startTime, endTime) {
+var validateTimeParameters = function(startTime, endTime) {
   if (startTime.getHours() < 17) {
     throw new Error("Start time can be no earlier than 5:00 PM");
   }
@@ -8,7 +8,10 @@ ChargeCalculator.prototype.calculate = function(startTime, endTime) {
   if (endTime.getHours() > 4 && endTime.getHours() <= 17) {
     throw new Error("End time can not be after 4am");
   }
+}
 
+ChargeCalculator.prototype.calculate = function(startTime, endTime) {
+  validateTimeParameters(startTime, endTime);
   return (endTime.getHours() - startTime.getHours()) * 12;
 };
 
