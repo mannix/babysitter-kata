@@ -20,4 +20,11 @@ describe('Charge Calculator', function() {
     var endTime = new Date(2016, 2, 13, 20, 0, 0, 0);
     expect(chargeCalculator.calculate(startTime, endTime)).toEqual(36);
   });
+
+  it('throws an error when start time is before 5pm', function() {
+    var startTime = new Date(2016, 2, 13, 16, 0, 0, 0);
+    var endTime = new Date(2016, 2, 13, 18, 0, 0, 0);
+    expect(chargeCalculator.calculate.bind(null, startTime, endTime)).toThrow();
+  });
+
 });
