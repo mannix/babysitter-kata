@@ -39,4 +39,16 @@ describe('Charge Calculator', function() {
     expect(chargeCalculator.calculate.bind(null, startTime, endTime)).toThrow();
   });
 
+  it('throws an error when fractional start time is used', function() {
+    var startTime = new Date(2016, 2, 13, 17, 30, 0, 0);
+    var endTime = new Date(2016, 2, 13, 23, 0, 0, 0);
+    expect(chargeCalculator.calculate.bind(null, startTime, endTime)).toThrow();
+  });
+
+  it('throws an error when fractional end time is used', function() {
+    var startTime = new Date(2016, 2, 13, 17, 0, 0, 0);
+    var endTime = new Date(2016, 2, 13, 23, 30, 0, 0);
+    expect(chargeCalculator.calculate.bind(null, startTime, endTime)).toThrow();
+  });
+
 });
