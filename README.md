@@ -16,3 +16,6 @@ Feature:
 As a babysitter
 In order to get paid for 1 night of work
 I want to calculate my nightly charge
+
+### Running
+Use [jasmine-node](https://github.com/mhevery/jasmine-node) to run tests.
