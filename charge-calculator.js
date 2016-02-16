@@ -1,5 +1,14 @@
 var ChargeCalculator = function() {};
 
+var normalRate = 12;
+var bedtimeRate = 8;
+var overtimeRate = 16;
+
+var earliestStart = 17;
+var bedtime = 20;
+var midnight = 24;
+var latestEnd = 4;
+
 var validateTimeParameters = function(startTime, endTime) {
   if (endTime <= startTime) {
     throw new Error("Start time must be before end time");
@@ -9,16 +18,16 @@ var validateTimeParameters = function(startTime, endTime) {
     throw new Error("Fractional hours are not permitted");
   }
 
-  if (startTime.getHours() < 17 && startTime.getHours() > 4) {
+  if (startTime.getHours() < earliestStart && startTime.getHours() > latestEnd) {
     throw new Error("Start time can not be earlier than 5:00 PM");
   }
 
-  if (endTime.getHours() > 4 && endTime.getHours() <= 17) {
+  if (endTime.getHours() > latestEnd && endTime.getHours() <= earliestStart) {
     throw new Error("End time can not be after 4:00 AM");
   }
 }
 
-var totalTime = function(startTime, endTime) {
+var totalHours = function(startTime, endTime) {
   return (endTime - startTime) / 1000 / 60 / 60;
 }
 
@@ -26,18 +35,18 @@ ChargeCalculator.prototype.calculate = function(startTime, endTime) {
   validateTimeParameters(startTime, endTime);
 
   var total = 0;
-  var length = totalTime(startTime, endTime);
+  var length = totalHours(startTime, endTime);
   var startHour = startTime.getHours();
 
-  startHour = startHour === 0 ? 24 : startHour;
+  startHour = startHour === 0 ? midnight : startHour;
 
   for (hour = startHour; hour < startHour + length; hour++) {
-    if (hour >= 17 && hour < 20) {
-      total += 12;
-    } else if (hour >=20 && hour < 24) {
-      total += 8;
-    } else if (hour >= 24 && hour <= 28) {
-      total += 16;
+    if (hour >= earliestStart && hour < bedtime) {
+      total += normalRate;
+    } else if (hour >= bedtime && hour < midnight) {
+      total += bedtimeRate;
+    } else if (hour >= midnight && hour <= midnight + latestEnd) {
+      total += overtimeRate;
     }
   }
 
