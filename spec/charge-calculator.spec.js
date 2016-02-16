@@ -63,4 +63,10 @@ describe('Charge Calculator', function() {
     expect(chargeCalculator.calculate(startTime, endTime)).toEqual(8);
   });
 
+  it('calculates the maximum charge for a full night', function() {
+    var startTime = new Date(2016, 2, 13, 17, 0, 0, 0);
+    var endTime = new Date(2016, 2, 14, 4, 0, 0, 0);
+    expect(chargeCalculator.calculate(startTime, endTime)).toEqual(132);
+  });
+
 });

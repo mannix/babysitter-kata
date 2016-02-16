@@ -18,14 +18,30 @@ var validateTimeParameters = function(startTime, endTime) {
   }
 }
 
+var totalTime = function(startTime, endTime) {
+  return (endTime - startTime) / 1000 / 60 / 60;
+}
+
 ChargeCalculator.prototype.calculate = function(startTime, endTime) {
   validateTimeParameters(startTime, endTime);
-  if (startTime.getHours() >= 0 && startTime.getHours() < 4) {
-    return (endTime.getHours() - startTime.getHours()) * 16;
-  } else if (startTime.getHours() >= 20 && startTime.getHours() <= 23) {
-    return (endTime.getHours() - startTime.getHours()) * 8;
+
+  var total = 0;
+  var length = totalTime(startTime, endTime);
+  var startHour = startTime.getHours();
+
+  startHour = startHour === 0 ? 24 : startHour;
+
+  for (hour = startHour; hour < startHour + length; hour++) {
+    if (hour >= 17 && hour < 20) {
+      total += 12;
+    } else if (hour >=20 && hour < 24) {
+      total += 8;
+    } else if (hour >= 24 && hour <= 28) {
+      total += 16;
+    }
   }
-  return (endTime.getHours() - startTime.getHours()) * 12;
+
+  return total;
 };
 
 module.exports = ChargeCalculator;
